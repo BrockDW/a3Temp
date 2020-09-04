@@ -1,5 +1,5 @@
 # Team2-Week2
-# Breakout
+## Breakout
 ### Java + Swing
 #### Teammates
 * Xiao  Xiong
