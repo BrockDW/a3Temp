@@ -11,7 +11,7 @@ import javax.swing.Timer;
 import breakout.C;
 
 public class ScreenManager extends JComponent {
-	private static final long serialVersionUID = -4183563130393427881L;
+    private static final long serialVersionUID = -4183563130393427881L;
 	private GameScreen currentScreen;
 
 	public ScreenManager() {
