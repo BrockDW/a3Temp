@@ -18,7 +18,7 @@ public class Main {
 
         sm.getInputMap().put(KeyStroke.getKeyStroke("SPACE"),"pressed");
         sm.getActionMap().put("pressed", new AbstractAction() {
-			private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = -7539932265070492785L;
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -28,10 +28,55 @@ public class Main {
         	
         });
         
-//        sm.getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "pressed");
-//        sm.getActionMap().put("pressed", new AbstractAction() {
-//        	
-//        });
+        sm.getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "downPressed");
+        sm.getActionMap().put("downPressed", new AbstractAction() {
+
+			private static final long serialVersionUID = -8298149438222677521L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+//				if(Input.downPressed)
+				Input.downPressed = true; 
+			}
+        	
+        });
+        sm.getInputMap().put(KeyStroke.getKeyStroke("released DOWN"), "downReleased");
+        sm.getActionMap().put("downReleased", new AbstractAction() {
+
+			private static final long serialVersionUID = -2676482285942674873L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Input.downPressed = false; 
+			}
+        	
+        });
+        sm.getInputMap().put(KeyStroke.getKeyStroke("UP"), "upPressed");
+        sm.getActionMap().put("upPressed", new AbstractAction() {
+        	
+			private static final long serialVersionUID = -2676482285942674873L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Input.upPressed = true; 
+			}
+        	
+        });
+        sm.getInputMap().put(KeyStroke.getKeyStroke("released UP"), "upReleased");
+        sm.getActionMap().put("upReleased", new AbstractAction() {
+
+			private static final long serialVersionUID = 7724366134375482607L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Input.upPressed = false; 
+			}
+        	
+        });
         
         frame.add(sm,BorderLayout.CENTER);
         frame.addKeyListener(new Input());
@@ -48,11 +93,7 @@ public class Main {
     	p.add(replayBeginning);
     	frame.add(p,BorderLayout.SOUTH);
     	
-    	// Reference https://stackoverflow.com/questions/4472530/disabling-space-bar-triggering-click-for-jbutton
-    	InputMap im = (InputMap)UIManager.get("Button.focusInputMap");
-    	im.put(KeyStroke.getKeyStroke("pressed SPACE"), "none");
-    	im.put(KeyStroke.getKeyStroke("released SPACE"), "none");
-
+    	
     	frame.pack();
         frame.setVisible(true);
 	}
