@@ -22,7 +22,7 @@ public class ScreenManager extends JComponent {
 		this.setDoubleBuffered(true);
 	}
 	
-	private void tick() {
+	public void tick() {
 		currentScreen.tick();
 		this.repaint();
 	}

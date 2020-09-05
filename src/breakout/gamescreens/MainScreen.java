@@ -19,7 +19,7 @@ public class MainScreen extends GameScreen {
 	
 	private HashMap<GameObject, List<Class<? extends GameObject>>> collisionsMap = new HashMap<>();
 	
-	MainScreen(ScreenManager s) {
+	public MainScreen(ScreenManager s) {
 		super(s);
 		
 		this.clock = new Clock(this);
