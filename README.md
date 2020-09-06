@@ -25,7 +25,7 @@ The observers are:
 * Paddle
 * Ball
 * Clock
-* GameObject
+
 
 ## Oberservations
 For a more detailed explanation can be found at [note.txt](https://github.iu.edu/sraizada/breakout/blob/master/notes.txt)
