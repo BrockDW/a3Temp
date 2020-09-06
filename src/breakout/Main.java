@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
-import breakout.gamescreens.GameScreen;
 import breakout.gamescreens.MainScreen;
 import breakout.gamescreens.ScreenManager;
 
@@ -86,7 +85,7 @@ public class Main {
         JButton pause = new JButton("Pause");
     	JButton restart = new JButton("Restart");
     	JButton undo = new JButton("Undo");
-    	JButton replayBeginning = new JButton("Replay from Beginning");
+    	JButton replayBeginning = new JButton("Play from Beginning");
     	p.add(pause);
     	p.add(restart);
     	p.add(undo);
