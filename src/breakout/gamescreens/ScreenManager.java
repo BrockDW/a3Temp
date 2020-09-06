@@ -13,10 +13,10 @@ import breakout.C;
 public class ScreenManager extends JComponent {
     private static final long serialVersionUID = -4183563130393427881L;
 	private GameScreen currentScreen;
-
+	Timer t = new Timer(C.TIMER_PERIOD, e -> tick());
 	public ScreenManager() {
 		this.setPreferredSize(new Dimension(C.WIDTH, C.HEIGHT));
-		Timer t = new Timer(C.TIMER_PERIOD, e -> tick());
+		
 		t.start();
 		currentScreen = new StartScreen(this);
 		this.setDoubleBuffered(true);
@@ -39,5 +39,11 @@ public class ScreenManager extends JComponent {
 	
 	public void switchScreen(GameScreen newScreen) {
 		currentScreen = newScreen;
+	}
+	public void timerStop() {
+		t.stop();
+	}
+	public void timerStart() {
+		t.start();
 	}
 }

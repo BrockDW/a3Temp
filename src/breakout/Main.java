@@ -2,7 +2,8 @@ package breakout;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-
+import java.awt.event.*;  
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import breakout.gamescreens.MainScreen;
@@ -83,7 +84,7 @@ public class Main {
         
         JPanel p = new JPanel();
         JButton pause = new JButton("Pause");
-    	JButton restart = new JButton("Restart");
+    	JButton restart = new JButton("Start/Restart");
     	JButton undo = new JButton("Undo");
     	JButton replayBeginning = new JButton("Play from Beginning");
     	p.add(pause);
@@ -91,9 +92,37 @@ public class Main {
     	p.add(undo);
     	p.add(replayBeginning);
     	frame.add(p,BorderLayout.SOUTH);
-    	
-    	
     	frame.pack();
         frame.setVisible(true);
+    	
+    	//restart 
+    	restart.addActionListener(new ActionListener(){  
+    	    public void actionPerformed(ActionEvent e){  
+    	    	sm.switchScreen(new MainScreen(sm)); 
+    	    }  
+    	    });  
+    	
+    	//pause
+    	pause.addActionListener(new ActionListener(){  
+    	    public void actionPerformed(ActionEvent e){  
+    	    	if (pause.getText().equals("Pause")) {
+    	    		pause.setText("Resume");
+    	    		sm.timerStop();
+    	    		restart.setEnabled(false);
+    	    /*		try { Thread.sleep(2000000); } 
+    	    		catch (InterruptedException e1)
+    	    		
+    	    		{ e1.printStackTrace(); }
+
+    	    	*/	
+    	        } else {
+    	        	pause.setText("Pause");
+    	        	sm.timerStart();
+    	        	restart.setEnabled(true);
+    	        }
+    	    }
+    	    }); 
+    	
+    	
 	}
 }
