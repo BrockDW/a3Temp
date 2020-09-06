@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import breakout.C;
 import breakout.gamemodel.hitboxes.Hitbox;
+import breakout.gamemodel.hitboxes.Hitbox.CollisionType;
 import breakout.gamemodel.hitboxes.CircleHitbox;
 import breakout.gamescreens.MainScreen;
 
@@ -15,13 +16,29 @@ public class Ball implements GameObject {
 	
 	public Ball(MainScreen ms) {
 		ms.registerGameObject(this);
-		
 		// the ball listens for collisions with bricks, the paddle, and walls
 		ArrayList<Class<? extends GameObject>> collisionClasses = new ArrayList<>();
 		collisionClasses.add(Brick.class);
 		collisionClasses.add(Paddle.class);
 		collisionClasses.add(Border.class);
 		ms.registerCollision(this, collisionClasses);
+	}
+	
+//	public float getDx() {
+//	    return this.dx;
+//	}
+//	
+//	public float getDy() {
+//	    return this.dy;
+//	}
+//	
+//	public CircleHitbox getCircleHitbox() {
+//	    return this.h;
+//	}
+	
+	public void unTick() {
+	    h.x -= dx;
+	    h.y -= dy;
 	}
 	
 	@Override

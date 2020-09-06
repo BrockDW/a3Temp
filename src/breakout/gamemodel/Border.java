@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import breakout.C;
 import breakout.gamemodel.hitboxes.Hitbox;
+import breakout.gamemodel.hitboxes.Hitbox.CollisionType;
 import breakout.gamemodel.hitboxes.RectangleHitbox;
 import breakout.gamescreens.MainScreen;
 
@@ -46,4 +47,6 @@ public class Border implements GameObject {
 		if (win) ms.winGame();
 		else if (lose) ms.loseGame();
 	}
+
+    
 }
