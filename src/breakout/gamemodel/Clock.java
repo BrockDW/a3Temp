@@ -15,6 +15,10 @@ public class Clock implements GameObject {
     public Clock(MainScreen ms) {
         ms.registerGameObject(this);
     }
+    
+    public int getMilliSec() {
+        return this.milliseconds;
+    }
 
     @Override
     public void tick() {
@@ -27,7 +31,7 @@ public class Clock implements GameObject {
     public void unTick() {
         if (seconds > 0) {
             seconds -= 1;
-            milliseconds += 1000;
+//            milliseconds -= 1000;
         }
     }
 

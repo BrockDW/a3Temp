@@ -15,7 +15,6 @@ public class Main {
 
         JFrame frame = new JFrame();
         ScreenManager sm = new ScreenManager();
-//        frame.setContentPane(sm);
 
         sm.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "pressed");
         sm.getActionMap().put("pressed", new AbstractAction() {
@@ -37,7 +36,6 @@ public class Main {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
 //				if(Input.downPressed)
                 Input.downPressed = true;
             }
@@ -102,7 +100,7 @@ public class Main {
                 GameScreen curGS = sm.getScreen();
                 if(curGS instanceof MainScreen) {
                     MainScreen curMS = (MainScreen) curGS;
-                    curMS.unDoCommand(9);
+                    curMS.unDoCommand(1);
                     pause.setText("Resume");
                     sm.timerStop();
                     restart.setEnabled(false);
@@ -117,9 +115,12 @@ public class Main {
                 GameScreen curGS = sm.getScreen();
                 if(curGS instanceof MainScreen) {
                     MainScreen curMS = (MainScreen) curGS;
-                    curMS.unDoCommandAll();
+                    sm.timerStop();
+                    curMS.replayGame();
+                    sm.repaint();
+                    sm.requestFocus();
+                    sm.timerStart();
                 }
-                System.out.println("I am undoing");
             }
         });
 

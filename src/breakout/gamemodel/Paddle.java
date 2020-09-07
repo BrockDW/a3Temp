@@ -28,15 +28,31 @@ public class Paddle implements GameObject {
             while (h.y < C.HEIGHT - C.PADDLE_HEIGHT - C.WALL_WIDTH - 1 && ++i < C.PADDLE_SPEED)
                 ++h.y;
     }
-
-    public void unTick() {
+    
+    public void tickForCmd(boolean upPressedHa, boolean downPressedHa) {
         int i = 0;
-        if (Input.upPressed)
-            while (h.y > C.WALL_WIDTH && ++i < C.PADDLE_SPEED)
-                ++h.y;
-        else if (Input.downPressed)
-            while (h.y < C.HEIGHT - C.PADDLE_HEIGHT - C.WALL_WIDTH - 1 && ++i < C.PADDLE_SPEED)
+        if (upPressedHa) {
+            while (h.y > C.WALL_WIDTH && ++i < C.PADDLE_SPEED) {
                 --h.y;
+            }
+        } else if(downPressedHa){
+            while (h.y < C.HEIGHT - C.PADDLE_HEIGHT - C.WALL_WIDTH - 1 && ++i < C.PADDLE_SPEED) {
+                ++h.y;
+            }
+        }
+    }
+
+    public void unTick(boolean upPressedHa, boolean downPressedHa) {
+        int i = 0;
+        if (upPressedHa) {
+            while (h.y < C.HEIGHT - C.PADDLE_HEIGHT - C.WALL_WIDTH - 1 && ++i < C.PADDLE_SPEED) {
+                ++h.y;
+            }
+        } else if(downPressedHa){
+            while (h.y > C.WALL_WIDTH && ++i < C.PADDLE_SPEED) {
+                --h.y;
+            }
+        }
     }
 
     @Override

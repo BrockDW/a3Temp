@@ -8,12 +8,17 @@ import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
+import javax.swing.Timer;
+
 import breakout.C;
+import breakout.Input;
 import breakout.Pair;
 import breakout.command.BallCollide;
 import breakout.command.BallMover;
 import breakout.command.BrickCollide;
 import breakout.command.Command;
+import breakout.command.PaddleMover;
+import breakout.command.TimerTick;
 import breakout.gamemodel.*;
 import breakout.gamemodel.hitboxes.*;
 
@@ -21,6 +26,7 @@ public class MainScreen extends GameScreen {
     private ArrayList<GameObject> gameObjects = new ArrayList<>();
     private ArrayList<Brick> bricks = new ArrayList<>();
     private Stack<Command> commandStack = new Stack<Command>();
+    private Stack<Command> commandReplayStack = new Stack<Command>();
     private Clock clock;
 
     private HashMap<GameObject, List<Class<? extends GameObject>>> collisionsMap = new HashMap<>();
@@ -38,26 +44,31 @@ public class MainScreen extends GameScreen {
         new Border(this, 0, 0, C.WALL_WIDTH, C.HEIGHT, false, true, false); // left
         new Border(this, C.WIDTH - C.WALL_WIDTH, 0, C.WALL_WIDTH, C.HEIGHT, true, false, false); // right
     }
-    
+
     public void unDoCommand(int undoPeriod) {
-        while(undoPeriod != 0) {
-            if(this.commandStack.size() == 0) {
+        while (undoPeriod != 0) {
+            if (this.commandStack.size() == 0) {
                 break;
             }
             Command curCommand = this.commandStack.pop();
             curCommand.unexecute();
-            undoPeriod--;
+
+            // System.out.println("it works here in overall");
+            if (curCommand instanceof TimerTick) {
+                // System.out.println("it works here in timer");
+                undoPeriod--;
+
+            }
+
         }
     }
-    
-    public void unDoCommandAll() {
-        while(this.commandStack.size() != 0) {
+
+    public void replayGame() {
+        while (this.commandStack.size() != 0) {
             Command curCommand = this.commandStack.pop();
             curCommand.unexecute();
         }
     }
-    
-    
 
     public void registerGameObject(GameObject o) {
         gameObjects.add(o);
@@ -85,16 +96,38 @@ public class MainScreen extends GameScreen {
 
     @Override
     public void tick() {
-        for(GameObject gameObj: this.gameObjects) {
-            if(gameObj instanceof Ball) {
+        for (GameObject gameObj : this.gameObjects) {
+            if (gameObj instanceof Ball) {
                 Command curCommand = new BallMover((Ball) gameObj);
                 this.commandStack.add(curCommand);
                 curCommand.execute();
+            } else if (gameObj instanceof Clock) {
+                Clock curClock = (Clock) gameObj;
+                if (curClock.getMilliSec() + C.TIMER_PERIOD > 1000) {
+                    Command curCommand = new TimerTick(curClock);
+                    this.commandStack.add(curCommand);
+                    curCommand.execute();
+                } else {
+                    curClock.tick();
+                }
+
+            } else if (gameObj instanceof Paddle) {
+                if (Input.upPressed || Input.downPressed) {
+                    Paddle curPaddle = (Paddle) gameObj;
+                    Command curCommand = new PaddleMover(curPaddle);
+                    this.commandStack.add(curCommand);
+                    curCommand.execute();
+                } else {
+                    gameObj.tick();
+                }
+
             } else {
                 gameObj.tick();
             }
-            //System.out.println(this.commandStack.size());
+            // System.out.println(this.commandStack.size());
         }
+
+        System.out.println(this.commandStack.size());
 
         /*
          * // Handle collisions. // Temporarily store detected collisions & their
@@ -120,7 +153,7 @@ public class MainScreen extends GameScreen {
         HashMap<GameObject, List<Pair<GameObject, Hitbox.CollisionType>>> collisions = new HashMap<>();
         // Iterate through all the GameObjects that requested collision notification
         for (GameObject o : collisionsMap.keySet()) {
-            //System.out.println(o.getClass());
+            // System.out.println(o.getClass());
             // Get the list of classes they want to be notified of collisions with
             List<Class<? extends GameObject>> classes = collisionsMap.get(o);
             // Filter the (list of all GameObjects) to those of the correct class and which
@@ -144,18 +177,18 @@ public class MainScreen extends GameScreen {
         // Actually call all the collision handlers
         collisions.forEach((k, pairs) -> {
             pairs.forEach(pair -> {
-                if(k instanceof Ball) {
-                    BallCollide curBallCommand = new BallCollide((Ball)k, pair.a, pair.b);
+                if (k instanceof Ball) {
+                    BallCollide curBallCommand = new BallCollide((Ball) k, pair.a, pair.b);
                     this.commandStack.add(curBallCommand);
                     curBallCommand.execute();
-                } else if(k instanceof Brick){
-                    System.out.println("I am working here in brick");
-                    BrickCollide curBrickCommand = new BrickCollide((Brick)k, pair.a, pair.b);
+                } else if (k instanceof Brick) {
+                    // System.out.println("I am working here in brick");
+                    BrickCollide curBrickCommand = new BrickCollide((Brick) k, pair.a, pair.b);
                     this.commandStack.add(curBrickCommand);
                     curBrickCommand.execute();
                 } else {
-                    System.out.println(k.getClass());
-                    k.onCollide(pair.a, pair.b); 
+                    // System.out.println(k.getClass());
+                    k.onCollide(pair.a, pair.b);
                 }
             });
         });
