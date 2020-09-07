@@ -3,7 +3,6 @@ package breakout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.*;
-import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import breakout.gamescreens.GameScreen;
@@ -94,7 +93,7 @@ public class Main {
         frame.add(p, BorderLayout.SOUTH);
         frame.pack();
         frame.setVisible(true);
-        
+        //undo
         undo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 GameScreen curGS = sm.getScreen();
@@ -109,7 +108,7 @@ public class Main {
                 System.out.println("I am undoing");
             }
         });
-        
+        //replayFromBeginning
         replayBeginning.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 GameScreen curGS = sm.getScreen();
@@ -121,6 +120,10 @@ public class Main {
                     sm.requestFocus();
                     sm.timerStart();
                 }
+<<<<<<< HEAD
+=======
+                System.out.println("Let's start again at the beginning of this level");
+>>>>>>> d44ca5e02234f84b5cc0bdf5bb87767d9ca00d9c
             }
         });
 
