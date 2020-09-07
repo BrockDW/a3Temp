@@ -120,10 +120,7 @@ public class Main {
                     sm.requestFocus();
                     sm.timerStart();
                 }
-<<<<<<< HEAD
-=======
                 System.out.println("Let's start again at the beginning of this level");
->>>>>>> d44ca5e02234f84b5cc0bdf5bb87767d9ca00d9c
             }
         });
 
